@@ -7,7 +7,7 @@
 ## 使用前准备
 * AccessID：由涂鸦平台提供
 * AccessKey：由涂鸦平台提供
-* pulsar地址：根据不同的业务区域选择 Pulsar 地址。可以从涂鸦对接文档中查询获取。
+* pulsar地址：根据不同的业务区域选择 Pulsar 地址。可以从涂鸦[对接文档](https://developer.tuya.com/cn/docs/iot/open-api/message-service/message-service?id=K95zu0nzdw9cd) 中查询获取。
 
 ## Example
 ```
