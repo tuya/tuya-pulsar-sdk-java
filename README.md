@@ -1,19 +1,44 @@
 # pulsar-client-java
 
 [English](README.md) | [中文版](README_cn.md)
+## Overview
+The current SDK is to facilitate developers to connect to Tuya’s message center and access pulsar.
+For more information, see Tuya [Message Queue](https://developer.tuya.com/en/docs/iot/open-api/message-service/message-service?id=K95zu0nzdw9cd).
+## Preparation before use
+* AccessID: Obtained from Tuya platform
+* AccessKey: Obtained from Tuya platform
+* Pulsar address: Choose Pulsar address according to different business areas. For more information about acquiring the address, see Tuya [Message Queue](https://developer.tuya.com/en/docs/iot/open-api/message-service/message-service?id=K95zu0nzdw9cd).
 
-## Introduction
+## Example
+```
+ public static void main(String[] args) throws Exception {
+        String url = MqConfigs.CN_SERVER_URL;
+        String accessId = "";
+        String accessKey = "";
 
-Tuya pulsar client SDK for java
+        MqConsumer mqConsumer = MqConsumer.build().serviceUrl(url).accessId(accessId).accessKey(accessKey)
+                .maxRedeliverCount(3).messageListener(message -> {
+                            System.out.println("------------------------------------------- --------");
+                            System.out.println("Message received:" + new String(message.getData()) + ",seq="
+                                    + message.getSequenceId() + ",time=" + message.getPublishTime() + ",consumed time="
+                                    + System.currentTimeMillis());
+                            String jsonMessage = new String(message.getData());
+                            MessageVO vo = JSON.parseObject(jsonMessage, MessageVO.class);
+                            System.out.println("the real message data:" + AESBase64Utils.decrypt(vo.getData(), accessKey.substring(8, 24)));
+                        }
 
-## Get Started
+                );
+        mqConsumer.start();
+    }
 
+```
 
+## Precautions
+N/A.
 
-## Support
+## Technical Support
 
-You can get support from Tuya with the following methods:
+You can get Tua developer technical support in the following ways:
 
-- Tuya Smart Help Center: [https://support.tuya.com/en/help](https://support.tuya.com/en/help)
-- Technical Support Council: [https://iot.tuya.com/council](https://iot.tuya.com/council)
-
+* [Tuya Help Center](https://support.tuya.com/en/help)
+* [Tuya technical ticket platform](https://iot.tuya.com/council)
