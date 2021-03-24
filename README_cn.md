@@ -10,27 +10,26 @@
 * pulsar地址：根据不同的业务区域选择 Pulsar 地址。可以从涂鸦[对接文档](https://developer.tuya.com/cn/docs/iot/open-api/message-service/message-service?id=K95zu0nzdw9cd) 中查询获取。
 
 ## Example
-```
- public static void main(String[] args) throws Exception {
-        String url = MqConfigs.CN_SERVER_URL;
-        String accessId = "";
-        String accessKey = "";
+```java
+public static void main(String[] args) throws Exception {
+    String url = MqConfigs.CN_SERVER_URL;
+    String accessId = "";
+    String accessKey = "";
 
-        MqConsumer mqConsumer = MqConsumer.build().serviceUrl(url).accessId(accessId).accessKey(accessKey)
-                .maxRedeliverCount(3).messageListener(message -> {
-                            System.out.println("---------------------------------------------------");
-                            System.out.println("Message received:" + new String(message.getData()) + ",seq="
-                                    + message.getSequenceId() + ",time=" + message.getPublishTime() + ",consumed time="
-                                    + System.currentTimeMillis());
-                            String jsonMessage = new String(message.getData());
-                            MessageVO vo = JSON.parseObject(jsonMessage, MessageVO.class);
-                            System.out.println("the real message data:" + AESBase64Utils.decrypt(vo.getData(), accessKey.substring(8, 24)));
-                        }
+    MqConsumer mqConsumer = MqConsumer.build().serviceUrl(url).accessId(accessId).accessKey(accessKey)
+            .maxRedeliverCount(3).messageListener(message -> {
+                        System.out.println("---------------------------------------------------");
+                        System.out.println("Message received:" + new String(message.getData()) + ",seq="
+                                + message.getSequenceId() + ",time=" + message.getPublishTime() + ",consumed time="
+                                + System.currentTimeMillis());
+                        String jsonMessage = new String(message.getData());
+                        MessageVO vo = JSON.parseObject(jsonMessage, MessageVO.class);
+                        System.out.println("the real message data:" + AESBase64Utils.decrypt(vo.getData(), accessKey.substring(8, 24)));
+                    }
 
-                );
-        mqConsumer.start();
-    }
-
+            );
+    mqConsumer.start();
+}
 ```
 
 ## 注意事项
@@ -38,7 +37,7 @@
 
 ## 技术支持
 
-你可以通过以下方式获得Tua开发者技术支持：
+你可以通过以下方式获得Tuya开发者技术支持：
 
 - 涂鸦帮助中心: [https://support.tuya.com/zh/help](https://support.tuya.com/zh/help)
 - 涂鸦技术工单平台: [https://iot.tuya.com/council](https://iot.tuya.com/council)
