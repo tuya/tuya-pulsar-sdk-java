@@ -11,7 +11,6 @@ For more information, see Tuya [Message Queue](https://developer.tuya.com/en/doc
 
 ## Example
 ```
-
 public class ConsumerExample {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerExample.class);
 
@@ -45,7 +44,6 @@ public class ConsumerExample {
         }
     }
 }
-
 ```
 
 ## Precautions
