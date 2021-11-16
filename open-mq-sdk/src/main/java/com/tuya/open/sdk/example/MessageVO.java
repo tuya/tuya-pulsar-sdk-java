@@ -1,5 +1,7 @@
 package com.tuya.open.sdk.example;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -59,12 +61,6 @@ public class MessageVO implements Serializable {
 
     @Override
     public String toString() {
-        return "MessageVO{" +
-                "data='" + data + '\'' +
-                ", protocol=" + protocol +
-                ", pv='" + pv + '\'' +
-                ", sign='" + sign + '\'' +
-                ", t=" + t +
-                '}';
+        return JSONObject.toJSONString(this);
     }
 }
