@@ -11,7 +11,6 @@
 
 ## Example
 ```
-
 public class ConsumerExample {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerExample.class);
 
@@ -45,7 +44,6 @@ public class ConsumerExample {
         }
     }
 }
-
 ```
 
 ## 注意事项
