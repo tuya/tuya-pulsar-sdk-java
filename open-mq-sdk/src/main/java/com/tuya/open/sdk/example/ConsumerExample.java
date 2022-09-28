@@ -2,7 +2,6 @@
 package com.tuya.open.sdk.example;
 
 import com.alibaba.fastjson.JSON;
-import com.tuya.open.sdk.mq.AESBase64Utils;
 
 import com.tuya.open.sdk.mq.MqConfigs;
 import com.tuya.open.sdk.mq.MqConsumer;

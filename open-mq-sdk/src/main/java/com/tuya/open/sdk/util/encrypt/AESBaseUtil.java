@@ -24,7 +24,7 @@ public abstract class AESBaseUtil {
     }
 
     protected Key generateKey(){
-        return new SecretKeySpec(this.keyValue, AES_STR);
+        return new SecretKeySpec(this.keyValue, this.algo);
     }
 
     public String getAlgo() {

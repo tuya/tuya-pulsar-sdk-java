@@ -31,7 +31,7 @@ public enum EncryptProtocolEnum {
             return (AESBaseUtil) AES_GCM.clazz.getDeclaredConstructor().newInstance();
         } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                  IllegalAccessException e) {
-            log.error(LOGGER_PREFIX + "throw err: {}\n{}", e.toString(), JSONObject.toJSONString(e));
+            log.error(LOGGER_PREFIX + "throw err: {}\n{}", e.getMessage(), JSONObject.toJSONString(e));
         }
         return null;
     }
