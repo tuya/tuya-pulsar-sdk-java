@@ -6,6 +6,7 @@ import com.tuya.open.sdk.mq.AESBase64Utils;
 
 import com.tuya.open.sdk.mq.MqConfigs;
 import com.tuya.open.sdk.mq.MqConsumer;
+import com.tuya.open.sdk.util.encrypt.AESBaseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ public class ConsumerExample {
         try {
             MessageVO messageVO = JSON.parseObject(payload, MessageVO.class);
             //decryption data
-            String dataJsonStr = AESBase64Utils.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24));
+            String dataJsonStr = AESBaseUtil.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24));
             System.out.println("messageVO=" + messageVO.toString() + "\n" + "data after decryption dataJsonStr=" + dataJsonStr);
         } catch (Exception e) {
             logger.error("payload=" + payload + "; your business processing exception, please check and handle. e=", e);
