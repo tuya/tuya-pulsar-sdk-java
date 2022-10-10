@@ -10,7 +10,7 @@
     <version>2.0.1</version>
 
     <properties>
-        <pulsar.client.version>2.9.3</pulsar.client.version>
+        <pulsar.client.version>2.7.1</pulsar.client.version>
         <fastjson.client.version>1.2.83</fastjson.client.version>
         <slf4j.api.version>1.7.21</slf4j.api.version>
         <logback.classic.version>1.2.9</logback.classic.version>
