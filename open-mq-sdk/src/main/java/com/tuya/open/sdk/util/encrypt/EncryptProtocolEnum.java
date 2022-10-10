@@ -1,12 +1,12 @@
 package com.tuya.open.sdk.util.encrypt;
 
-import com.alibaba.fastjson.JSONObject;
+import com.tuya.open.sdk.PulsarSdkVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationTargetException;
 
 public enum EncryptProtocolEnum {
-    AES_GCM("gcm", "2.1.0", AESGCMUtil.class);
+    AES_GCM("aes_gcm", PulsarSdkVersion.getVersion(), AESGCMUtil.class);
 
     private String key;
     private String sdkVersion;
@@ -31,7 +31,7 @@ public enum EncryptProtocolEnum {
             return (AESBaseUtil) AES_GCM.clazz.getDeclaredConstructor().newInstance();
         } catch (InvocationTargetException | NoSuchMethodException | InstantiationException |
                  IllegalAccessException e) {
-            log.error(LOGGER_PREFIX + "throw err: {}\n{}", e.getMessage(), JSONObject.toJSONString(e));
+                log.error(LOGGER_PREFIX + "throw err: {}\n{}", e.getMessage(), e.toString());
         }
         return null;
     }

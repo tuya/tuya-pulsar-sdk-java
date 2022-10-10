@@ -1,11 +1,10 @@
 
 package com.tuya.open.sdk.example;
 
-import com.alibaba.fastjson.JSON;
-
 import com.tuya.open.sdk.mq.MqConfigs;
 import com.tuya.open.sdk.mq.MqConsumer;
 import com.tuya.open.sdk.util.encrypt.AESBaseUtil;
+import org.apache.pulsar.common.util.ObjectMapperFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +32,7 @@ public class ConsumerExample {
      */
     private static void payloadHandler(String payload) {
         try {
-            MessageVO messageVO = JSON.parseObject(payload, MessageVO.class);
+            MessageVO messageVO = ObjectMapperFactory.getThreadLocal().readValue(payload, MessageVO.class);
             //decryption data
             String dataJsonStr = AESBaseUtil.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24));
             System.out.println("messageVO=" + messageVO.toString() + "\n" + "data after decryption dataJsonStr=" + dataJsonStr);

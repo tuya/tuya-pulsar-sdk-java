@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.pulsar.client.api.Authentication;
+import org.apache.pulsar.client.api.AuthenticationDataProvider;
 import org.apache.pulsar.client.api.PulsarClientException;
 
 public class MqAuthentication implements Authentication {
@@ -24,7 +25,7 @@ public class MqAuthentication implements Authentication {
 	}
 
 	@Override
-	public org.apache.pulsar.client.api.AuthenticationDataProvider getAuthData() throws PulsarClientException {
+	public AuthenticationDataProvider getAuthData() throws PulsarClientException {
 		return new MqAuthenticationDataProvider(this.accessId, this.accessKey);
 	}
 

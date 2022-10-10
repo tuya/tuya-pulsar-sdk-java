@@ -88,6 +88,7 @@
 
     <root>
         <level value="INFO"/>
+        <!--<appender-ref ref="console"/>-->
         <appender-ref ref="InfoFile"/>
         <appender-ref ref="WarnFile"/>
         <appender-ref ref="ErrorFile"/>

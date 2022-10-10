@@ -1,6 +1,7 @@
 package com.tuya.open.sdk.example;
 
-import com.alibaba.fastjson.JSONObject;
+import org.apache.pulsar.common.util.ObjectMapperFactory;
+import org.apache.pulsar.shade.com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.Serializable;
 
@@ -61,6 +62,10 @@ public class MessageVO implements Serializable {
 
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this);
+        try {
+            return ObjectMapperFactory.getThreadLocal().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
