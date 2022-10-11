@@ -34,7 +34,7 @@ public class ConsumerExample {
         try {
             MessageVO messageVO = ObjectMapperFactory.getThreadLocal().readValue(payload, MessageVO.class);
             //decryption data
-            String dataJsonStr = AESBaseUtil.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24));
+            String dataJsonStr = AESBaseUtil.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24), messageVO.getEncryptVersion());
             System.out.println("messageVO=" + messageVO.toString() + "\n" + "data after decryption dataJsonStr=" + dataJsonStr);
         } catch (Exception e) {
             logger.error("payload=" + payload + "; your business processing exception, please check and handle. e=", e);

@@ -16,6 +16,13 @@ public abstract class AESBaseUtil {
 
     abstract String decryptData(String data) throws Exception;
 
+    public static String decrypt(String data, String secretKey, String encryptVersion) throws Exception {
+        AESBaseUtil aes = EncryptProtocolEnum.getEncryptUtil(encryptVersion);
+        if (Objects.isNull(aes)) throw new Exception("Not found encrypt util");
+        aes.setKeyValue(secretKey.getBytes());
+        return aes.decryptData(data);
+    }
+
     public static String decrypt(String data, String secretKey) throws Exception {
         AESBaseUtil aes = EncryptProtocolEnum.getEncryptUtil();
         if (Objects.isNull(aes)) throw new Exception("Not found encrypt util");

@@ -16,8 +16,11 @@ public class MessageVO implements Serializable {
     private Integer protocol;
     private String pv;
     private String sign;
+    private String encryptVersion;
     private Long t;
 
+    public MessageVO() {
+    }
 
     public String getData() {
         return data;
@@ -59,6 +62,13 @@ public class MessageVO implements Serializable {
         this.t = t;
     }
 
+    public String getEncryptVersion() {
+        return encryptVersion;
+    }
+
+    public void setEncryptVersion(String encryptVersion) {
+        this.encryptVersion = encryptVersion;
+    }
 
     @Override
     public String toString() {
