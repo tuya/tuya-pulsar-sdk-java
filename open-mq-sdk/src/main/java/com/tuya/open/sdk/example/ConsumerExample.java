@@ -4,8 +4,8 @@ package com.tuya.open.sdk.example;
 import com.tuya.open.sdk.mq.MqConfigs;
 import com.tuya.open.sdk.mq.MqConsumer;
 import com.tuya.open.sdk.util.encrypt.AESBaseUtil;
-import org.apache.pulsar.common.util.ObjectMapperFactory;
 import org.apache.pulsar.client.api.MessageId;
+import org.apache.pulsar.common.util.ObjectMapperFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +19,9 @@ public class ConsumerExample {
     public static void main(String[] args) throws Exception {
         MqConsumer mqConsumer = MqConsumer.build().serviceUrl(URL).accessId(ACCESS_ID).accessKey(ACCESS_KEY)
                 .messageListener(message -> {
+                    System.out.println("---------------------------------------------------");
+                    System.out.println("Message received:" + new String(message.getData()) + ",time="
+                        + message.getPublishTime() + ",consumed time=" + System.currentTimeMillis());
                     MessageId msgId = message.getMessageId();
                     String tid = message.getProperty("tid");
                     long publishTime = message.getPublishTime();
