@@ -3,9 +3,9 @@ package com.tuya.open.sdk.example;
 
 import com.alibaba.fastjson.JSON;
 import com.tuya.open.sdk.mq.AESBase64Utils;
-
 import com.tuya.open.sdk.mq.MqConfigs;
 import com.tuya.open.sdk.mq.MqConsumer;
+import org.apache.pulsar.client.api.MessageId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +19,15 @@ public class ConsumerExample {
     public static void main(String[] args) throws Exception {
         MqConsumer mqConsumer = MqConsumer.build().serviceUrl(URL).accessId(ACCESS_ID).accessKey(ACCESS_KEY)
                 .messageListener(message -> {
-                    System.out.println("---------------------------------------------------");
-                    System.out.println("Message received:" + new String(message.getData()) + ",time="
-                            + message.getPublishTime() + ",consumed time=" + System.currentTimeMillis());
+                    MessageId msgId = message.getMessageId();
+                    String tid = message.getProperty("tid");
+                    long publishTime = message.getPublishTime();
                     String payload = new String(message.getData());
+                    logger.debug("###TUYA_PULSAR_MSG => start process message, messageId={}, publishTime={}, tid={}, payload={}",
+                        msgId, publishTime, tid, payload);
                     payloadHandler(payload);
+                    logger.debug("###TUYA_PULSAR_MSG => finish process message, messageId={}, publishTime={}, tid={}",
+                        msgId, publishTime, tid);
                 });
         mqConsumer.start();
     }
