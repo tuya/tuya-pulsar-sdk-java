@@ -1,10 +1,7 @@
 
 package com.tuya.open.sdk.mq;
 
-import org.apache.pulsar.client.api.Consumer;
-import org.apache.pulsar.client.api.Message;
-import org.apache.pulsar.client.api.PulsarClient;
-import org.apache.pulsar.client.api.SubscriptionType;
+import org.apache.pulsar.client.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +55,7 @@ public class MqConsumer {
      * @throws Exception
      */
     public void start() throws Exception {
+        logger.debug("###TUYA_PULSAR_MSG => start initial pulsar consumer");
         if (serviceUrl == null || serviceUrl.trim().length() == 0) {
             throw new IllegalStateException("serviceUrl must be initialized");
         }
@@ -75,15 +73,27 @@ public class MqConsumer {
         Consumer consumer = client.newConsumer().topic(String.format("%s/out/%s", accessId, env.getValue()))
                 .subscriptionName(String.format("%s-sub", accessId)).subscriptionType(SubscriptionType.Failover)
 				.autoUpdatePartitions(Boolean.FALSE).subscribe();
+        logger.debug("###TUYA_PULSAR_MSG => pulsar consumer initial success");
         do {
+            MessageId msgId = null;
+            String tid = null;
             try {
+                logger.debug("###TUYA_PULSAR_MSG => start receive next message");
                 Message message = consumer.receive();
+                msgId = message.getMessageId();
+                tid = message.getProperty("tid");
+                long publishTime = message.getPublishTime();
+                logger.debug("###TUYA_PULSAR_MSG => message received, messageId={}, publishTime={}, tid={}", msgId, publishTime, tid);
+
                 Long s = System.currentTimeMillis();
                 messageListener.onMessageArrived(message);
                 if (MqConfigs.DEBUG) {
                     logger.info("business processing cost={}", System.currentTimeMillis() - s);
                 }
+
+                logger.debug("###TUYA_PULSAR_MSG => start message ack, messageId={}, publishTime={}, tid={}", msgId, publishTime, tid);
                 consumer.acknowledge(message);
+                logger.debug("###TUYA_PULSAR_MSG => message ack success, messageId={}, publishTime={}, tid={}", msgId, publishTime, tid);
             } catch (Throwable t) {
                 logger.error("error:", t);
             }
