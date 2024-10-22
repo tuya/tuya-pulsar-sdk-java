@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.pulsar.shade.org.apache.commons.codec.binary.Base64;
 import org.apache.pulsar.shade.org.apache.commons.codec.binary.StringUtils;
 
+@Deprecated
 public class AESBase64Utils {
 
     private static final String	AES	= "AES";
