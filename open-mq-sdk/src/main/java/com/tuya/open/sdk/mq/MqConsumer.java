@@ -92,7 +92,7 @@ public class MqConsumer {
                 }
 
                 logger.debug("###TUYA_PULSAR_MSG => start message ack, messageId={}, publishTime={}, tid={}", msgId, publishTime, tid);
-                consumer.acknowledge(message);
+                consumer.acknowledgeCumulative(message);
                 logger.debug("###TUYA_PULSAR_MSG => message ack success, messageId={}, publishTime={}, tid={}", msgId, publishTime, tid);
             } catch (Throwable t) {
                 logger.error("error:", t);
