@@ -26,7 +26,7 @@ public class ConsumerExample {
                     String payload = new String(message.getData());
                     logger.debug("###TUYA_PULSAR_MSG => start process message, messageId={}, publishTime={}, encryptModel={}, payload={}",
                         msgId, publishTime, encryptModel, payload);
-                    payloadHandler(payload, encryptModel);
+                    payloadHandler(payload, encryptModel, msgId);
                     logger.debug("###TUYA_PULSAR_MSG => finish process message, messageId={}, publishTime={}, encryptModel={}",
                         msgId, publishTime, encryptModel);
                 });
@@ -36,14 +36,14 @@ public class ConsumerExample {
     /**
      * This method is used to process your message business
      */
-    private static void payloadHandler(String payload, String encryptModel) {
+    private static void payloadHandler(String payload, String encryptModel, MessageId msgId) {
         try {
             MessageVO messageVO = JSON.parseObject(payload, MessageVO.class);
             //decryption data
             String dataJsonStr = AESBaseDecryptor.decrypt(messageVO.getData(), ACCESS_KEY.substring(8, 24), encryptModel);
-            System.out.println("messageVO=" + messageVO + "\n" + "data after decryption dataJsonStr=" + dataJsonStr);
+            System.out.println("###TUYA_PULSAR_MSG => decrypt messageVO=" + messageVO + "\n" + "data after decryption dataJsonStr=" + dataJsonStr + " messageId=" + msgId);
         } catch (Exception e) {
-            logger.error("payload=" + payload + "; your business processing exception, please check and handle. e=", e);
+            logger.error("###TUYA_PULSAR_MSG => handle payload={},messageId={} your business processing exception, please check and handle.", payload, msgId, e);
         }
     }
 }
